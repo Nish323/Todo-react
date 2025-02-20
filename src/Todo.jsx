@@ -3,11 +3,11 @@ import './styles.css';
 
 export const Todo = () => {
   const [todoText, setTodoText] = useState("");
-  const [incompleteTosos, setIncompleteTodos] = useState([
+  const [incompleteTodos, setIncompleteTodos] = useState([
       "TODOです1",
       "TODOです2"
     ]);
-  const [completeTosos, setcompleteTodos] = useState([
+  const [completeTodos, setcompleteTodos] = useState([
     "TODOでした1",
     "TODOでした2"
   ]);
@@ -16,10 +16,16 @@ export const Todo = () => {
 
   const onClickAdd = () => {
     if(todoText === "") return;
-    const newTodos = [...incompleteTosos, todoText];
+    const newTodos = [...incompleteTodos, todoText];
     setIncompleteTodos(newTodos);
     setTodoText("");
-  }
+  };
+
+  const onClickDelete = (index) => {
+    const newTodos = [...incompleteTodos];
+    newTodos.splice(index, 1); 
+    setIncompleteTodos(newTodos);
+  };
 
   return (
     <>
@@ -30,13 +36,13 @@ export const Todo = () => {
       <div className='incomplete-area'>
         <p className='title'>未完了のTODO</p>
         <ul>
-          {incompleteTosos.map((todo) => (
+          {incompleteTodos.map((todo, index) => (
             //DBあるならidとかの一意な要素がいい
             <li key={todo}>
               <div className='list-row'>
                 <p className='todo-item'>{todo}</p>
                 <button>完了</button>
-                <button>削除</button>
+                <button onClick={() => onClickDelete(index)}>削除</button>
               </div>
             </li>
           ))}
@@ -45,7 +51,7 @@ export const Todo = () => {
       <div className='complete-area'>
         <p className='title'>完了のTODO</p>
         <ul>
-          {completeTosos.map((todo) => (
+          {completeTodos.map((todo) => (
             <li ket={todo}>
               <div className='list-row'>
                 <p className='todo-item'>{todo}</p>
